@@ -1,1 +1,8 @@
-spring.application.name=springboot4
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+    defer-datasource-initialization: true
