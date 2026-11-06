@@ -1,5 +1,4 @@
-package me.shinsunyoung.springbootdeveloper.dto;
+package com.mysite.springboot4.dto;
 
-public record UploadResponse(
-        String imageUrl
-) {}
+public record UploadResponse(String imageUrl) {
+}

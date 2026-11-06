@@ -1,5 +1,7 @@
-package com.mysite.springboot4.ai;
+package com.mysite.springboot4.config;
 
+import com.mysite.springboot4.ai.PollinationsChatModel;
+import com.mysite.springboot4.ai.PollinationsImageModel;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.image.ImageModel;

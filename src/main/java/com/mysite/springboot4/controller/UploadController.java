@@ -1,7 +1,7 @@
-package me.shinsunyoung.springbootdeveloper.controller;
+package com.mysite.springboot4.controller;
 
-import me.shinsunyoung.springbootdeveloper.dto.UploadResponse;
-import me.shinsunyoung.springbootdeveloper.service.FileStorageService;
+import com.mysite.springboot4.dto.UploadResponse;
+import com.mysite.springboot4.service.FileStorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,10 +22,6 @@ public class UploadController {
 
     @PostMapping("/api/upload")
     public ResponseEntity<UploadResponse> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(fileStorageService.store(
-                        file.getBytes(),
-                        file.getOriginalFilename()
-                ));
+        return ResponseEntity.status(HttpStatus.CREATED).body(fileStorageService.store(file.getBytes(), file.getOriginalFilename()));
     }
 }

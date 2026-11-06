@@ -1,13 +1,12 @@
 package com.mysite.springboot4.controller;
 
 import com.mysite.springboot4.domain.Article;
-import com.mysite.springboot4.dto.AddArticleRequest;
-import com.mysite.springboot4.dto.ArticleResponse;
-import com.mysite.springboot4.dto.UpdateArticleRequest;
+import com.mysite.springboot4.dto.*;
 import com.mysite.springboot4.service.BlogService;
+import com.mysite.springboot4.service.ThumbnailGeneratorService;
+import com.mysite.springboot4.service.WritingAssistantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,46 +16,48 @@ import java.util.List;
 @RestController
 public class BlogApiController {
     private final BlogService blogService;
+    private final WritingAssistantService writingAssistantService;
+    private final ThumbnailGeneratorService thumbnailGeneratorService;
 
     @PostMapping("/api/articles")
     public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request) {
         Article savedArticle = blogService.save(request);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedArticle);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
     }
 
     @GetMapping("/api/articles")
     public ResponseEntity<List<ArticleResponse>> findAllArticles() {
-        List<ArticleResponse> articles = blogService.findAll()
-                .stream()
-                .map(ArticleResponse::new)
-                .toList();
-
-        return ResponseEntity.ok()
-                .body(articles);
+        List<ArticleResponse> articles = blogService.findAll().stream().map(ArticleResponse::new).toList();
+        return ResponseEntity.ok().body(articles);
     }
 
     @GetMapping("/api/articles/{id}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) {
         Article article = blogService.findById(id);
-
-        return ResponseEntity.ok()
-                .body(new ArticleResponse(article));
+        return ResponseEntity.ok().body(new ArticleResponse(article));
     }
 
     @DeleteMapping("/api/articles/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
         blogService.delete(id);
-
-        return ResponseEntity.ok()
-                .build();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/api/articles/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody UpdateArticleRequest request) {
         Article updatedArticle = blogService.update(id, request);
-        return ResponseEntity.ok()
-                .body(updatedArticle);
+        return ResponseEntity.ok().body(updatedArticle);
+    }
+
+    @PostMapping("/api/ai-suggestions")
+    public ResponseEntity<WritingSuggestionsResponse> writingAssist(@RequestBody WritingSuggestionRequest request) {
+        WritingSuggestionsResponse response = writingAssistantService.getWritingAssist(request);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/api/ai-thumbnails")
+    public ResponseEntity<GeneratorThumbnailResponse> thumbnailGenerator(@RequestBody GeneratorThumbnailRequest request) {
+        GeneratorThumbnailResponse response = thumbnailGeneratorService.generateThumbnail(request);
+        return ResponseEntity.ok().body(response);
     }
 }

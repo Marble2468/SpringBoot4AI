@@ -1,4 +1,7 @@
 package com.mysite.springboot4.service;
 
-public class FileStorageService {
+import com.mysite.springboot4.dto.UploadResponse;
+
+public interface FileStorageService {
+    UploadResponse store(byte[] bytes, String filename);
 }

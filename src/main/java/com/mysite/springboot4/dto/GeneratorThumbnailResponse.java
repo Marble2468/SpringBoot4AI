@@ -1,3 +1,4 @@
-package me.shinsunyoung.springbootdeveloper.dto;
+package com.mysite.springboot4.dto;
 
-public record GeneratorThumbnailResponse(String imageUrl) {}
+public record GeneratorThumbnailResponse(String imageUrl) {
+}

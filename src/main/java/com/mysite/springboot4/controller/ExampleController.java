@@ -1,4 +1,4 @@
-package me.shinsunyoung.springbootdeveloper.controller;
+package com.mysite.springboot4.controller;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +24,7 @@ public class ExampleController {
 
         return "example";
     }
+
     @Setter
     @Getter
     class Person {
